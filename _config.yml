@@ -81,7 +81,7 @@ analytics:
 # Site Author
 author:
   name             : "Oussama Bastamy"
-  avatar           : "headshot.jpeg"
+  avatar           : "arc_prof.png"
   bio              : "Data scientist with strong experience in Time Series forcasting, Fraude detection and Computer Vision"
   location         : "Paris"
   employer         :
