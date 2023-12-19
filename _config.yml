@@ -7,7 +7,7 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Oussama Bastamy / Data scientist"
+title                    : "Oussama Bastamy"
 title_separator          : "-"
 name                     : &name "Oussama Bastamy"
 description              : &description "Data "
@@ -82,7 +82,7 @@ analytics:
 author:
   name             : "Oussama Bastamy"
   avatar           : "arc_prof.png"
-  bio              : "Data scientist with strong experience in Time Series forcasting, Fraude detection and Computer Vision"
+  bio              : "Aspiring Data scientist with a strong interest in Time Series forcasting, Fraude detection and Computer Vision"
   location         : "Paris, FR"
   employer         :
   # pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
