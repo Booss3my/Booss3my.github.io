@@ -83,11 +83,11 @@ author:
   name             : "Oussama Bastamy"
   avatar           : "arc_prof.png"
   bio              : "Data scientist with strong experience in Time Series forcasting, Fraude detection and Computer Vision"
-  location         : "Paris"
+  location         : "Paris, FR"
   employer         :
   # pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
   # googlescholar    : "http://yourfullgooglescholarurl.com"
-  email            :
+  email            : bastamyoussama@gmail.com
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
