@@ -1,6 +1,6 @@
 ---
 title: "PINN-Arrh "
-excerpt: "A Physics-informed neural networks approach to modelling Li-Ion calendar ageing <br/><img src='/images/PINN_arrh/soc_PINN.png' style='height: 100px; width:100px;'>"
+excerpt: "A Physics-informed neural networks approach to modelling Li-Ion calendar ageing <br/><img src='/images/PINN_arrh/soc_PINN.png' style='height: 500px; width:500px;'>"
 collection: portfolio
 ---
 
@@ -56,8 +56,7 @@ $$L_{Boundary} = \sum|f(T_{synth},0,SOC_{synth};\theta)|$$
 
 The coefficients $a_1$ , $a_2$ , $a_3$ , $a_4$ were optimized to balance the contribution of each loss and also the fact that the losses have different scales.
 
-
-<img src='/images/PINN_arrh/pinn_loss.png' alt="Computing training loss" style="height: 100px; width:100px;"/>
+![Computing training loss](/images/PINN_arrh/pinn_loss.png)
 
 #### Results
 - This approach improved the mean absolute error on a batch test cells, from 1,05%(industry standard method) to 0.38%(our method), (in % because we compute the capacity normalized with with starting value (in %)), in the context of the project it's was big difference.
