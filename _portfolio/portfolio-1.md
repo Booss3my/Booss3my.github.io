@@ -1,6 +1,6 @@
 ---
 title: "PINN-Arrh "
-excerpt: "A Physics-informed neural networks approach to modelling Li-Ion calendar ageing <br/><img src='/images/500x300.png'>"
+excerpt: "A Physics-informed neural networks approach to modelling Li-Ion calendar ageing <br/><img src='/images/PINN_arrh//soc_PINN.png'>"
 collection: portfolio
 ---
 
