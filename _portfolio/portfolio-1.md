@@ -57,6 +57,9 @@ $$L_{Boundary} = \sum|f(T_{synth},0,SOC_{synth};\theta)|$$
 The coefficients $a_1$ , $a_2$ , $a_3$ , $a_4$ were optimized to balance the contribution of each loss and also the fact that the losses have different scales.
 
 ![Computing training loss](/images/PINN_arrh/pinn_loss.png)
+
+#### Training run
+
 ![Training](/images/PINN_arrh/download.png)
 
 #### Results
