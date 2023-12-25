@@ -1,10 +1,10 @@
 ---
 title: "SOH-estimator"
-excerpt: "State of health estimation using charging signals and LSTMs <br/><img src='/images/500x300.png'>"
+excerpt: "State of health estimation using charging signals and LSTMs <br/><img src='/images/SOH_estimator/inference.png'>"
 collection: portfolio
 ---
 
-# SOH-estimator
+# State of health estimation using charging signals and LSTMs
 Real-time Li-Ion state of health estimation using LSTMS (Proof Of Concept)
 
 
