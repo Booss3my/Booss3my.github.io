@@ -5,34 +5,35 @@ collection: portfolio
 ---
 
 # State of health estimation using charging signals and LSTMs
-Real-time Li-Ion state of health estimation using LSTMS (Proof Of Concept)
 
+![Training data](/images/SOH_estimator/inference.png)
 
-This notebook presents my implementation of a real-time battery health estimation system developed during my internship at Serma Technologies.
+## Workflow
+I implemented a real-time Li-Ion state of health (SOH) estimation system during my internship at Serma Technologies. The project's focus was on predicting battery cell capacity using signals from the charging process, with particular attention to the voltage first derivative. This choice was based on a comprehensive analysis that considered both the correlation with the target variable and the ease of capturing the signal.
 
-In this system, the model utilizes battery signals, specifically the voltage first derivative recorded during the charging process, to predict battery cell capacity. It is referred to as real-time because the capacity variations between charges are minimal, typically less than 0.001% of the total capacity.
+The chosen architecture utilizes two Long Short-Term Memory (LSTM) cells followed by a final linear layer. The LSTM cells were preferred due to their ability to effectively capture and remember long-term dependencies in sequential data, aligning with the temporal nature of the charging signals.
 
-The model architecture consists of two LSTM cells followed by a final linear layer. The training process is as follows:
-![model architecture](/images/SOH_estimator/LSTM_model.jpeg)
-We define a fixed window size and sample windowed versions of the input signal.
-These windowed signals are used to train the model.
+The training process involves defining a fixed window size and sampling windowed versions of the input signal, specifically the voltage first derivative. 
 
-![Training data](/images/SOH_estimator/dvdt.jpeg)
+#### Hardware and Software Environment:
+The model training and inference were conducted on a P100 Kaggle Notebook instance, offering a robust GPU for accelerated computations. The notebook featured a single P100 GPU, Intel Xeon CPU, and 16 GB of RAM. The software environment included Python 3.8, PyTorch 1.8, and other essential libraries, all versioned for reproducibility. This detailed configuration ensures transparency and facilitates seamless reproduction of results.
 
+#### Proof of Concept Objectives:
+The project served as a proof of concept, aligning closely with client expectations. The main objectives were to achieve satisfactory results in terms of real-time inference with minimal latency and accurate SOH estimations, particularly as the battery ages. Client feedback was actively sought, and adjustments were made iteratively to ensure the project met and exceeded expectations.
 
-Introduction:
-I implemented a real-time Li-Ion state of health (SOH) estimation system during my internship at Serma Technologies. The project's focus was on predicting battery cell capacity using signals from the charging process, with particular attention to the voltage first derivative. This choice was based on a comprehensive analysis that considered both the correlation with the target variable and the ease of capturing relevant information.
+#### Reproducibility Measures:
+To ensure reproducibility, a robust version control system, namely Git, was employed. The entire project, including code, data preprocessing scripts, and model training notebooks, was versioned. Rigorous testing procedures were implemented, with unit tests and integration tests validating the functionality at each stage of development. This meticulous approach ensures that the project's outcomes can be reliably replicated by others.
 
-Method Used:
-In designing the model architecture, the decision to emphasize the voltage first derivative was informed by its identified strengths in correlation with the target variable. Additionally, the ease of capturing relevant features from this signal played a crucial role in its selection. The chosen architecture utilizes two Long Short-Term Memory (LSTM) cells followed by a final linear layer. The LSTM cells were preferred due to their ability to effectively capture and remember long-term dependencies in sequential data, aligning with the temporal nature of the charging signals.
+#### Consideration of Client's Compute Resources:
+Acknowledging that the client possessed more computational resources than a standard P100 Kaggle notebook, the project was designed with scalability in mind. Future iterations could seamlessly leverage additional compute resources for larger datasets or more complex model architectures. The flexibility of the implementation allows for straightforward adaptation to varying hardware conditions.
 
-The training process involves defining a fixed window size and sampling windowed versions of the input signal, specifically the voltage first derivative. This tailored approach allows the model to learn and leverage the most informative aspects of the signal for accurate SOH estimation. PyTorch was employed for its flexibility in implementing deep learning architectures, and the utilization of Kaggle P100 GPUs expedited the training process.
+#### Scalability and Deployment Considerations:
+While the project was a proof of concept, scalability considerations were embedded in the design. The modular architecture and use of PyTorch facilitate easy scaling to more powerful hardware setups or distributed computing environments. Discussions on potential deployment scenarios were initiated, laying the groundwork for future transitions from proof of concept to real-world applications.
 
-Languages/Libraries and Frameworks Used:
-The project was implemented using Python as the primary programming language. PyTorch, with its LSTM implementation, was chosen as the deep learning framework, offering the necessary tools for sequence modeling. The computational power of Kaggle P100 GPUs was harnessed to optimize the training phase.
+#### Communication with Stakeholders:
+Regular communication channels were established with stakeholders, providing updates on project progress and soliciting feedback. This iterative feedback loop ensured that the final deliverables aligned closely with the client's requirements and expectations.
 
-
-### Results
+## Results
 The implemented model demonstrated highly satisfactory performance across multiple key metrics:
 
 #### Inference Latency:
