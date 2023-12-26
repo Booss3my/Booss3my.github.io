@@ -33,10 +33,12 @@ The model training and inference were conducted on a local machine. The machine 
 To ensure reproducibility, a robust version control system, namely Git, was employed. The entire project, including code, data preprocessing scripts, and model training notebooks, was versioned. Rigorous testing procedures were implemented, with unit tests and integration tests validating the functionality at each stage of development. This meticulous approach ensures that the project's outcomes can be reliably replicated by others.
 
 #### Consideration of Client's Compute Resources:
-Acknowledging that the client possessed more computational resources than the machine used in training/inference, the project was designed with scalability in mind. Future iterations could seamlessly leverage additional compute resources even it's not this not needed in this particular application.
+Acknowledging that the client possessed more computational resources than the machine used in training/inference, the project was designed with scalability in mind. Future iterations could seamlessly leverage additional compute resources even if it's not needed in this particular application.
 
-#### Scalability and Deployment Considerations:
-While the project was a proof of concept, scalability considerations were embedded in the design. The modular architecture and use of PyTorch facilitate easy scaling to more powerful hardware setups or distributed computing environments. Discussions on potential deployment scenarios were initiated, laying the groundwork for future transitions from proof of concept to real-world applications.
+#### Deployment Considerations:
+While the project was a proof of concept. Discussions on potential deployment scenarios were initiated, laying the groundwork for future transitions from proof of concept to real-world applications.
+
+One of the proposed patterns involves deploying the model as a microservice (using a framework like Seldon core) on a cloud platform. In this scenario, the charging station would invoke this microservice upon completing the sampling of all input signals. The microservice, hosted on the cloud (ex: AWS Lambda), would conduct the inference, and the resulting prediction, along with pertinent information, would be seamlessly stored in a relational database (ex: Amazon RDS).
 
 #### Communication with Stakeholders:
 Regular communication channels were established with stakeholders, providing updates on project progress and soliciting feedback. This iterative feedback loop ensured that the final deliverables aligned closely with the client's requirements and expectations.
