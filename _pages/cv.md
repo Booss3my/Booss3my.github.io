@@ -9,7 +9,7 @@ redirect_from:
 
 {% include base_path %}
 
-[Resume](/Resumes/Cv_fr.pdf)
+[French Resume](/Resumes/Cv_fr.pdf)
 
 Education
 ======
