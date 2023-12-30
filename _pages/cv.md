@@ -9,6 +9,8 @@ redirect_from:
 
 {% include base_path %}
 
+[Resume](/Resumes/Cv_fr.pdf)
+
 Education
 ======
 * M.S. in AI, signal and Image processing, ENSEIRB-MATMECA, 2023
