@@ -4,7 +4,7 @@ excerpt: "A Physics-informed neural networks approach to modelling Li-Ion calend
 collection: portfolio
 ---
 
-
+![Alt text](/images/PINN_arrh/ezgif-7-b76792b954.gif)
 This notebook contains some of the work I have done during my internship at **Serma Tech**, to **model the Calendar ageing** (ageing that takes place in storage) of Lithium-Ion  battery cells (shared with the company's approval ).
 
 The models mostly seen in litterature/industry-standard are based on the Arrhenius equation that is generally used to model the speed of a reaction w.t.r to Temprature.
