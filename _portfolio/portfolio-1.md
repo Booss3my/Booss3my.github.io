@@ -1,10 +1,9 @@
 ---
 title: "PINN-Arrh "
-excerpt: "Computing a Physics-informed loss for a neural networks approach to modelling Li-Ion calendar ageing <br/><img src='/images/PINN_arrh/soc_PINN.png' style='height: 500px; width:500px;'>"
+excerpt: "Computing a Physics-informed loss for a neural networks approach to modelling Li-Ion calendar ageing <br/><img src='/images/PINN_arrh/ezgif-7-b76792b954.gif' style='height: 500px; width:500px;'>"
 collection: portfolio
 ---
 
-![Alt text](/images/PINN_arrh/ezgif-7-b76792b954.gif)
 This blog post contains some of the work I have done during my internship at **Serma Tech**, to **model the Calendar ageing** (ageing that takes place in storage) of Lithium-Ion battery cells.
 
 The models mostly seen in litterature/industry-standard are based on the Arrhenius equation that is generally used to model the speed of a reaction w.t.r to Temprature.
@@ -30,8 +29,16 @@ Where $a$ and $b$ are two parameters to estimate (they change depending on other
 Although this approach is widely used it seldom takes in consideration factors like the manufacturing process, in fact two batteries with the same specs from two different manufactureres can age differently in the same conditions, this was observed during the battery ageing tests that were conducted at Serma Technologies in order to gather a training dataset for our model.
 
 
-### Limitations:
+## Data collection
 ![Alt text](/images/PINN_arrh/testing_process.png)
+
+
+## Limitations and overview
+- Expensive data collection resulting in sparse data, thus training a model using only experimental data would result in overfitting.
+- Using the simple physics model doesn't take into account the variance in factors like manufacturing processes.
+
+
+
 Our approach was to leverage the same equation plus testing data to train a standard neural network (MLP), using a custom loss function that we defined as such :
 
 
