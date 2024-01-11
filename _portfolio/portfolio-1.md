@@ -1,8 +1,10 @@
 ---
-title: "Computing a Physics-informed loss for a neural networks approach to modelling Li-Ion calendar ageing "
-excerpt: " <br/><img src='/images/PINN_arrh/ezgif-7-b76792b954.gif' style='height: 300px; width:300px;'>"
+title: " PINN - Arrhenius"
+excerpt: "Computing a Physics-informed loss for a neural networks approach to modelling Li-Ion calendar ageing <br/><img src='/images/PINN_arrh/ezgif-7-b76792b954.gif' style='height: 300px; width:300px;'>"
 collection: portfolio
 ---
+
+# Computing a Physics-informed loss for a neural networks approach to modelling Li-Ion calendar ageing
 
 ## Context
 
