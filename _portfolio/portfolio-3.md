@@ -1,101 +1,81 @@
 ---
-title: "Indeed job Scraper Automation with Airflow and Docker-Compose on AWS EC2"
-excerpt: "Automated Indeed Job Scraper orchestrated with Airflow, feeding a PostgreSQL database, and deployed using Docker-Compose on an AWS EC2 instance<br/><img src='/images/Datascraper/scraper_diagg_2.png' style='height: 400px; width:550px;' class='center'>"
+title: " PINN - Arrhenius"
+excerpt: "Computing a Physics-informed loss for a neural networks approach to modelling Li-Ion calendar ageing <br/><img src='/images/PINN_arrh/ezgif-7-b76792b954.gif' style='height: 400px; width:400px;' class='center'>"
 collection: portfolio
 ---
 
-# Overview
-## https://github.com/Booss3my/Datascraper
-Developed a robust web scraper for Indeed job listings, employing a paid web proxy API and orchestrating the process with Airflow. Leveraged Docker Compose for seamless deployment, extracting and storing job information in a PostgreSQL database. The project was deployed for daily scraping on an AWS EC2 instance.
+# Computing a Physics-informed loss for a neural networks approach to modelling Li-Ion calendar ageing
 
-![Alt text](/images/Datascraper/scraper_diagg_2.png)
+## Context
+
+This blog post showcases my work during my internship at Serma Tech where I focused on modeling the calendar ageing (ageing during storage) of Lithium-Ion battery cells.
+
+Commonly, industry-standard models rely on the Arrhenius equation to capture the temperature-dependent reaction speed, formulated as:
+
+$$\frac{\partial C}{\partial t} = \frac{\alpha(T)}{ \sqrt{t}}$$
+
+With:
+
+$C$ : The cell capacity at instant $t$
+
+$T$ : Temperature
+
+$\alpha$ : An acceleration coefficient
+
+$$\alpha(T) = a \exp\left(\frac{b}{T}\right)$$
+
+  
+Where $a$ and $b$ are two parameters to estimate (they change depending on other factors like the difference in cell type, manufacturing, initial State Of Charge and other parameters ...)
 
 
-
-# Technical Highlights
-## Web Scraping Logic : 
-
-The core of the project lies in the web scraping logic. Utilized Python and BeautifulSoup to extract relevant job information from Indeed's dynamic web pages and pandas for data cleaning and processing, the main function is the scrape function (called in the airflow DAG).
+While widely used, such models often overlook manufacturing variations. Two batteries with identical specifications from different manufacturers can age differently, as observed in battery ageing tests conducted at Serma Technologies to gather a training dataset for our model.
 
 
-### Scraping 
+## Data collection
+![Alt text](/images/PINN_arrh/testing_process.png)
 
-`scrape(max_date=2, subjects=["data science"], pages=3)`
 
-Main function to extract, transform and save job offers dataframe to the staging folder.
+## Limitations
+- Expensive data collection resulting in sparse data, thus training a model using only experimental data would result in overfitting.
+- Using the simple physics model doesn't take into account the variance in factors like manufacturing processes.
 
-### Loading to database
 
-`load_data()`
+## Loss function
+To address these challenges, we employed a novel approach, training a standard neural network (MLP) using a custom loss function taking into consideration the physics ageing equation as well as additionnal information from experimental data:
 
-This function reads the datframe parquet file in the staging folder and loads it to a PostgreSQL database with SQLAlchemy.
+$$ L_{training} = a_1 L_{MSE} + a_2 L_{DE}+a_3 L_{Boundary}+a_4 L_{CstPenalty}$$
 
-### Cleaning
 
-`clean()`
+![Computing training loss](/images/PINN_arrh/pinn_loss.png)
 
-This function cleans the staging folder for the next scheduled scrape, to keep the storage on the the compute instance in check.
 
-## Airflow Orchestration : 
-Employed Apache Airflow to orchestrate and schedule the scraping tasks. Configured an Airflow DAG (Directed Acyclic Graphs) to define the workflow, and the execution schedule (daily). This approach allows for easy monitoring and maintenance of the scraping and loading processes.
+1- A general formulation of the Arrhenius equation: 
 
-DAG : 
-The `schedule_interval` argument ensures that the Airflow scheduler triggers the tasks on a specific schedule (here daily). 
+$$\frac{\partial^2 C_{loss}}{\partial t}+\frac{1}{2t}\frac{\partial C_{loss}}{\partial t }=0$$
 
-```
-ingestion_dag = DAG(
-    'Indscraping_dag',
-    default_args=default_args,
-    description='Job offer records scraping',
-    schedule_interval=timedelta(days=1),
-    catchup=False
-)
-```
+The loss function derived from this equation: 
 
-Scraping task :
+$$ L_{DE} = \frac{1}{n}\sum_{i=1}^{n} |\frac{\partial^2 f}{\partial t}(T_i,t_i,SOC_i;\theta)+\frac{1}{2t_i}\frac{\partial f}{\partial t }(T_i,t_i,SOC_i;\theta)|$$
 
-```
-task_1 = PythonOperator(
-    task_id='ScrapeData_and_transform',
-    python_callable=scrape,
-    dag=ingestion_dag,
-)
-```
+Where: f (T, t, SOC; θ) is the model's response to the input (T, t, SOC) and θ the model parameters.
 
-Loading task :
 
-```
-task_2 = PythonOperator(
-    task_id='load_to_DB',
-    python_callable=load_data,
-    dag=ingestion_dag,
-)
-```
+2- We also penalize the constant solution to the previous equation, so that the model doesn't have a constant output which would minimize the $L_{DE}$ loss : 
 
-Task dependency:
+$$ L_{CstPenalty} = \frac{1}{n}\sum|\frac{1}{\frac{\partial f}{\partial t}(T_i,t_i,SOC_i;\theta)}|$$
 
-```task_1 >> task_2 >> task_3```
+3- MSE loss to learn from training samples : 
+ $$L_{MSE} = \frac{1}{n}\sum_{i=1}^{n}(f(T_i,t_i,SOC_i;\theta) - C_i)^2$$
 
-## Containerization :
-A docker compose is set up with few changes to the official Airflow docker-compose file (with Postgres as a backend to store our metadata, and Redis as the message broker).
+4- A loss to translate the boudary condition,  "no ageing at t=0"
+$$L_{Boundary} = \sum|f(T_{synth},0,SOC_{synth};\theta)|$$
 
-A Docker file is created to install the Python requirements.
+PS: The coefficients $a_1$ , $a_2$ , $a_3$ , $a_4$ were tuned to balance the contribution of each loss and also the fact that the losses have different scales and to acheive convergence.
 
-Inside the build.sh file, we build our custom Airflow image then run it using the ```docker-compose up``` comand 
+## Training run
 
-### Starting the containers
-1 - Install docker and docker-compose
+![Training](/images/PINN_arrh/download.png)
 
-2 - Clone the repository and create a .env file with the needed enviroment variables.
+## Results
+- Improved mean absolute error on a batch of test cells from 1.05% (industry standard) to 0.38% (our method), a significant improvement in the context of the project.
 
-3 - run the build.sh file ```. build.sh```
-
-![Alt text](/images/Datascraper/docker_compose.PNG)
-
-4 - Access the Airflow UI on port 8080 and trigger the DAG.
-
-![Alt text](/images/Datascraper/AIRFLOW_tasks_ec2.png)
-
-5 - Access your scraped Table from the Postgre server (On the EC2 example the table was created in the Airflow backend database, but any postgres server can be used as long as the DB environnement variables are set in the .env file). 
-
-![Alt text](/images/Datascraper/working_DB.PNG)
