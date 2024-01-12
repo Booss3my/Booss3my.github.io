@@ -1,6 +1,6 @@
 ---
 title: "Indeed data scraper"
-excerpt: "Scraping job offers from indeed and scheduling tasks using Airflow <br/><img src='/images/Datascraper/scraper_diagg_2.png' style='height: 400px; width:400px;'>"
+excerpt: "Scraping job offers from indeed and scheduling tasks using Airflow <br/><img src='/images/Datascraper/scraper_diagg_2.png' style='height: 400px; width:700px;'>"
 collection: portfolio
 ---
 
@@ -8,7 +8,7 @@ collection: portfolio
 ## https://github.com/Booss3my/Datascraper
 Developed a robust web scraper for Indeed job listings, employing a paid web proxy API and orchestrating the process with Airflow. Leveraged Docker Compose for seamless deployment, extracting and storing job information in a PostgreSQL database. The project was deployed for daily scraping on an AWS EC2 instance.
 
-![Alt text](../images/Datascraper/scraper_diagg_2.png)
+![Alt text](/images/Datascraper/scraper_diagg_2.png)
 
 
 
@@ -86,13 +86,13 @@ Inside the build.sh file, we build our custom Airflow image then run it using th
 
 3 - run the build.sh file ```. build.sh```
 
-![Alt text](../images/Datascraper/docker_compose.PNG)
+![Alt text](/images/Datascraper/docker_compose.PNG)
 
 4 - Access the Airflow UI on port 8080 and trigger the DAG.
 
-![Alt text](../images/Datascraper/AIRFLOW_tasks_ec2.png)
+![Alt text](/images/Datascraper/AIRFLOW_tasks_ec2.png)
 
 5 - Access your scraped Table from the Postgre server (On the EC2 example the table was created in the Airflow backend database, but any postgres server can be used as long as the DB environnement variables are set in the .env file). 
 
-![Alt text](../images/Datascraper/working_DB.PNG)
+![Alt text](/images/Datascraper/working_DB.PNG)
 
