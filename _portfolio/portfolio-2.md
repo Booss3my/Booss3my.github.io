@@ -1,6 +1,6 @@
 ---
 title: "SOH-estimator"
-excerpt: "State of health estimation using charging signals and LSTMs <br/><img src='/images/SOH_estimator/inference.png'>"
+excerpt: "State of health estimation using charging signals and LSTMs <br/><img src='/images/SOH_estimator/inference.png' class='center'>"
 collection: portfolio
 ---
 

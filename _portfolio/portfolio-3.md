@@ -1,6 +1,6 @@
 ---
 title: "Indeed job Scraper Automation with Airflow and Docker-Compose on AWS EC2"
-excerpt: "Automated Indeed Job Scraper orchestrated with Airflow, feeding a PostgreSQL database, and deployed using Docker-Compose on an AWS EC2 instance<br/><img src='/images/Datascraper/scraper_diagg_2.png' style='height: 400px; width:550px;'>"
+excerpt: "Automated Indeed Job Scraper orchestrated with Airflow, feeding a PostgreSQL database, and deployed using Docker-Compose on an AWS EC2 instance<br/><img src='/images/Datascraper/scraper_diagg_2.png' style='height: 400px; width:550px;' class='center'>"
 collection: portfolio
 ---
 
@@ -39,8 +39,9 @@ This function cleans the staging folder for the next scheduled scrape, to keep t
 ## Airflow Orchestration : 
 Employed Apache Airflow to orchestrate and schedule the scraping tasks. Configured an Airflow DAG (Directed Acyclic Graphs) to define the workflow, and the execution schedule (daily). This approach allows for easy monitoring and maintenance of the scraping and loading processes.
 
-DAG :
+DAG : 
 The ```schedule_interval``` argument ensures that the Airflow scheduler triggers the tasks on a specific schedule (here daily). 
+
 ```
 ingestion_dag = DAG(
     'Indscraping_dag',
@@ -50,6 +51,7 @@ ingestion_dag = DAG(
     catchup=False
 )
 ```
+
 Scraping task :
 ```
 task_1 = PythonOperator(
