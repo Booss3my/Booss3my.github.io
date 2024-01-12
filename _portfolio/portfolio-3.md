@@ -19,19 +19,19 @@ The core of the project lies in the web scraping logic. Utilized Python and Beau
 
 
 ### Scraping 
-```python
+```
 scrape(max_date=2, subjects=["data science"], pages=3)
 ```
 Main function to extract, transform and save job offers dataframe to the staging folder.
 
 ### Loading to database
-```python
+```
 load_data()
 ```
 This function reads the datframe parquet file in the staging folder and loads it to a PostgreSQL database with SQLAlchemy.
 
 ### Cleaning
-```python
+```
 clean()
 ```
 This function cleans the staging folder for the next scheduled scrape, to keep the storage on the the compute instance in check.
@@ -41,7 +41,7 @@ Employed Apache Airflow to orchestrate and schedule the scraping tasks. Configur
 
 DAG :
 The ```schedule_interval``` argument ensures that the Airflow scheduler triggers the tasks on a specific schedule (here daily). 
-```python
+```
 ingestion_dag = DAG(
     'Indscraping_dag',
     default_args=default_args,
@@ -51,7 +51,7 @@ ingestion_dag = DAG(
 )
 ```
 Scraping task :
-```python
+```
 task_1 = PythonOperator(
     task_id='ScrapeData_and_transform',
     python_callable=scrape,
@@ -60,7 +60,7 @@ task_1 = PythonOperator(
 ```
 
 Loading task :
-```python
+```
 task_2 = PythonOperator(
     task_id='load_to_DB',
     python_callable=load_data,
@@ -68,7 +68,7 @@ task_2 = PythonOperator(
 )
 ```
 Task dependency:
-```python
+```
 task_1 >> task_2 >> task_3
 ```
 
