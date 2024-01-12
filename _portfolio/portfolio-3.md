@@ -1,45 +1,46 @@
 ---
 title: "Indeed data scraper"
-excerpt: "Scraping job offers from indeed and scheduling tasks using Airflow <br/><img src='/images/SOH_estimator/inference.png'>"
+excerpt: "Scraping job offers from indeed and scheduling tasks using Airflow <br/><img src='/images/Datascraper/scraper_diagg_2.png'>"
 collection: portfolio
 ---
 
-
 # Overview
-Developed a robust web scraper for Indeed job listings, employing a paid web proxy API and orchestrating the process with Airflow. Leveraged Docker Compose for seamless deployment, extracting and storing job information in a PostgreSQL database. The project aimed at providing comprehensive insights into the job market, enabling personalized searches, and automating job applications.
+## https://github.com/Booss3my/Datascraper
+Developed a robust web scraper for Indeed job listings, employing a paid web proxy API and orchestrating the process with Airflow. Leveraged Docker Compose for seamless deployment, extracting and storing job information in a PostgreSQL database. The project was deployed for daily scraping on an AWS EC2 instance.
+
+![Alt text](../images/Datascraper/scraper_diagg_2.png)
+
+
 
 # Technical Highlights
-## Web Scraping Logic
+## Web Scraping Logic : 
 
 The core of the project lies in the web scraping logic. Utilized Python and BeautifulSoup to extract relevant job information from Indeed's dynamic web pages and pandas for data cleaning and processing, the main function is the scrape function (called in the airflow DAG).
 
+
+### Scraping 
 ```python
-def scrape(max_date=2, subjects=["data science"], pages=3):
-    """
-    Main function to extract, transform, sort, and save job offers.
-
-    Args:
-        max_date (int): Age of offers in days.
-        subjects (list): List of subjects for job offers.
-        pages (int): Number of pages to scrape per subject.
-    """
-    offerlist = []
-    for subject in subjects:
-        for i in range(0, pages * 10, 10):
-            soup = extract(max_date, i, subject)
-            df = transform(soup)
-            df["Date"] = freshness_to_date(df["Freshness"])
-            offerlist.append(df)
-
-    df = pd.concat(offerlist)
-    df.reset_index(drop=True)
-    df.to_csv(os.path.join(RPATH,"staging/offers.csv"))
+scrape(max_date=2, subjects=["data science"], pages=3)
 ```
+Main function to extract, transform and save job offers dataframe to the staging folder.
 
-## Airflow Orchestration
+### Loading to database
+```python
+load_data()
+```
+This function reads the datframe parquet file in the staging folder and loads it to a PostgreSQL database with SQLAlchemy.
+
+### Cleaning
+```python
+clean()
+```
+This function cleans the staging folder for the next scheduled scrape, to keep the storage on the the compute instance in check.
+
+## Airflow Orchestration : 
 Employed Apache Airflow to orchestrate and schedule the scraping tasks. Configured an Airflow DAG (Directed Acyclic Graphs) to define the workflow, and the execution schedule (daily). This approach allows for easy monitoring and maintenance of the scraping and loading processes.
 
 DAG :
+The ```schedule_interval``` argument ensures that the Airflow scheduler triggers the tasks on a specific schedule (here daily). 
 ```python
 ingestion_dag = DAG(
     'Indscraping_dag',
@@ -66,6 +67,32 @@ task_2 = PythonOperator(
     dag=ingestion_dag,
 )
 ```
+Task dependency:
+```python
+task_1 >> task_2 >> task_3
+```
 
-## PostgreSQL Database Integration
-Implemented PostgreSQL as the backend database for storing scraped job data. Utilized SQLAlchemy for seamless integration with Python, ensuring efficient data storage and retrieval.
+## Containerization :
+A docker compose is set up with few changes to the official Airflow docker-compose file (with Postgres as a backend to store our metadata, and Redis as the message broker).
+
+A Docker file is created to install the Python requirements.
+
+Inside the build.sh file, we build our custom Airflow image then run it using the ```docker-compose up``` comand 
+
+### Starting the containers
+1 - Install docker and docker-compose
+
+2 - Clone the repository and create a .env file with the needed enviroment variables.
+
+3 - run the build.sh file ```. build.sh```
+
+![Alt text](../images/Datascraper/docker_compose.PNG)
+
+4 - Access the Airflow UI on port 8080 and trigger the DAG.
+
+![Alt text](../images/Datascraper/AIRFLOW_tasks_ec2.png)
+
+5 - Access your scraped Table from the Postgre server (On the EC2 example the table was created in the Airflow backend database, but any postgres server can be used as long as the DB environnement variables are set in the .env file). 
+
+![Alt text](../images/Datascraper/working_DB.PNG)
+
