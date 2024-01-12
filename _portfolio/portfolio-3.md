@@ -1,6 +1,6 @@
 ---
 title: "Indeed data scraper"
-excerpt: "Scraping job offers from indeed and scheduling tasks using Airflow <br/><img src='/images/Datascraper/scraper_diagg_2.png'>"
+excerpt: "Scraping job offers from indeed and scheduling tasks using Airflow <br/><img src='/images/Datascraper/scraper_diagg_2.png' style='height: 400px; width:400px;'>"
 collection: portfolio
 ---
 
