@@ -19,21 +19,21 @@ The core of the project lies in the web scraping logic. Utilized Python and Beau
 
 
 ### Scraping 
-```
-scrape(max_date=2, subjects=["data science"], pages=3)
-```
+
+`scrape(max_date=2, subjects=["data science"], pages=3)`
+
 Main function to extract, transform and save job offers dataframe to the staging folder.
 
 ### Loading to database
-```
-load_data()
-```
+
+```load_data()```
+
 This function reads the datframe parquet file in the staging folder and loads it to a PostgreSQL database with SQLAlchemy.
 
 ### Cleaning
-```
-clean()
-```
+
+```clean()```
+
 This function cleans the staging folder for the next scheduled scrape, to keep the storage on the the compute instance in check.
 
 ## Airflow Orchestration : 
@@ -53,6 +53,7 @@ ingestion_dag = DAG(
 ```
 
 Scraping task :
+
 ```
 task_1 = PythonOperator(
     task_id='ScrapeData_and_transform',
@@ -62,6 +63,7 @@ task_1 = PythonOperator(
 ```
 
 Loading task :
+
 ```
 task_2 = PythonOperator(
     task_id='load_to_DB',
@@ -69,10 +71,10 @@ task_2 = PythonOperator(
     dag=ingestion_dag,
 )
 ```
+
 Task dependency:
-```
-task_1 >> task_2 >> task_3
-```
+
+```task_1 >> task_2 >> task_3```
 
 ## Containerization :
 A docker compose is set up with few changes to the official Airflow docker-compose file (with Postgres as a backend to store our metadata, and Redis as the message broker).
@@ -97,4 +99,3 @@ Inside the build.sh file, we build our custom Airflow image then run it using th
 5 - Access your scraped Table from the Postgre server (On the EC2 example the table was created in the Airflow backend database, but any postgres server can be used as long as the DB environnement variables are set in the .env file). 
 
 ![Alt text](/images/Datascraper/working_DB.PNG)
-
