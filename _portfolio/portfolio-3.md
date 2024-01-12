@@ -26,13 +26,13 @@ Main function to extract, transform and save job offers dataframe to the staging
 
 ### Loading to database
 
-```load_data()```
+`load_data()`
 
 This function reads the datframe parquet file in the staging folder and loads it to a PostgreSQL database with SQLAlchemy.
 
 ### Cleaning
 
-```clean()```
+`clean()`
 
 This function cleans the staging folder for the next scheduled scrape, to keep the storage on the the compute instance in check.
 
@@ -40,7 +40,7 @@ This function cleans the staging folder for the next scheduled scrape, to keep t
 Employed Apache Airflow to orchestrate and schedule the scraping tasks. Configured an Airflow DAG (Directed Acyclic Graphs) to define the workflow, and the execution schedule (daily). This approach allows for easy monitoring and maintenance of the scraping and loading processes.
 
 DAG : 
-The ```schedule_interval``` argument ensures that the Airflow scheduler triggers the tasks on a specific schedule (here daily). 
+The `schedule_interval` argument ensures that the Airflow scheduler triggers the tasks on a specific schedule (here daily). 
 
 ```
 ingestion_dag = DAG(
