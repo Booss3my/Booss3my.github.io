@@ -1,6 +1,6 @@
 ---
-title: "Indeed data scraper"
-excerpt: "Scraping job offers from indeed and scheduling tasks using Airflow <br/><img src='/images/Datascraper/scraper_diagg_2.png' style='height: 400px; width:700px;'>"
+title: "Indeed job Scraper Automation with Airflow and Docker-Compose on AWS EC2"
+excerpt: "Automated Indeed Job Scraper orchestrated with Airflow, feeding a PostgreSQL database, and deployed using Docker-Compose on an AWS EC2 instance<br/><img src='/images/Datascraper/scraper_diagg_2.png' style='height: 400px; width:550px;'>"
 collection: portfolio
 ---
 
